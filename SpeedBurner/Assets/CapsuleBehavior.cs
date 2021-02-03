@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityOSC;
 
 public class CapsuleBehavior : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class CapsuleBehavior : MonoBehaviour
     //[SerializeField] SpeedManager speedManager;
     void Start()
     {
-        
+        OSCHandler.Instance.Init();
+        OSCHandler.Instance.SendMessageToClient("pd", "/unity/power", "ready");
     }
 
     // Update is called once per frame
@@ -25,6 +27,8 @@ public class CapsuleBehavior : MonoBehaviour
             SpeedManager speedManager = gameManager.GetComponent<SpeedManager>();
             speedManager.gameSpeed += 70;
             Debug.Log($"Game Speed: {speedManager.gameSpeed}");
+            //powerup sound
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/power", 1);
             /*Debug.Log($"gameSpeed: {speedManager.gameSpeed}");
             speedManager.gameSpeed += 100;
             Debug.Log($"gameSpeed: {speedManager.gameSpeed}");*/
